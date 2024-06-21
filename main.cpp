@@ -1,7 +1,6 @@
 #include <chrono>
 #include <fstream>
 #include <iostream>
-#include <ratio>
 #include <vector>
 
 using namespace std;
@@ -42,15 +41,15 @@ bool acceptable(const vector<int> &board, int index, int value) {
   auto [row, column] = indexToRowColumn(index);
 
   // Check column
-  for (int c = 0; c < BOARD_SIZE; ++c) {
-    if (board[rowColumnToIndex(row, c)] == value) {
+  for (int r = 0; r < BOARD_SIZE; ++r) {
+    if (board[rowColumnToIndex(r, column)] == value) {
       return false;
     }
   }
 
   // Check row
-  for (int r = 0; r < BOARD_SIZE; ++r) {
-    if (board[rowColumnToIndex(r, column)] == value) {
+  for (int c = 0; c < BOARD_SIZE; ++c) {
+    if (board[rowColumnToIndex(row, c)] == value) {
       return false;
     }
   }
@@ -71,9 +70,9 @@ bool acceptable(const vector<int> &board, int index, int value) {
 
 vector<int> getPossibleMoves(const vector<int> &board, int index) {
   vector<int> moves;
-  for (int i = 1; i <= BOARD_SIZE; ++i) {
-    if (acceptable(board, index, i)) {
-      moves.push_back(i);
+  for (int value = 1; value <= BOARD_SIZE; ++value) {
+    if (acceptable(board, index, value)) {
+      moves.push_back(value);
     }
   }
 
@@ -86,7 +85,7 @@ void writeSolveTimeToFile(microseconds duration) {
   file.close();
 }
 
-bool solve(vector<int> &board, int &index, int &backtrack) {
+bool solve(vector<int> &board, int index, int &backtrack) {
   while ((index < TOTAL_CELLS) && (board[index] != 0)) {
     ++index;
   }
@@ -104,6 +103,7 @@ bool solve(vector<int> &board, int &index, int &backtrack) {
       return true;
     }
   }
+
   board[index] = 0;
   ++backtrack;
   return false;
