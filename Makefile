@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-Wall -Wextra -std=c++14
+CFLAGS=-Wall -Wextra -std=c++14 -O3 -Ofast -march=native -mtune=native -ffast-math -flto
 
 all: SudokuSolver
 

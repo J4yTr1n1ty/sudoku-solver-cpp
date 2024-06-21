@@ -79,9 +79,9 @@ vector<int> getPossibleMoves(const vector<int> &board, int index) {
   return moves;
 }
 
-void writeSolveTimeToFile(microseconds duration) {
+void writeSolveTimeToFile(milliseconds duration) {
   ofstream file("solve_time.txt", ios::app);
-  file << duration.count() << " μs,";
+  file << duration.count() << " ms,";
   file.close();
 }
 
@@ -117,17 +117,19 @@ void solveBruteForce() {
 
   bool solutionFound = solve(board, index, backtrack);
   auto endTime = high_resolution_clock::now();
-  auto solutionTime = duration_cast<microseconds>(endTime - startTime);
+  auto solutionTime = duration_cast<milliseconds>(endTime - startTime);
 
   cout << "Solution found: " << (solutionFound ? "Yes" : "No") << endl;
   cout << "Backtrack count: " << backtrack << endl;
-  cout << "Solution time: " << solutionTime.count() << " μs" << endl;
+  cout << "Solution time: " << solutionTime.count() << " ms" << endl;
 
   writeSolveTimeToFile(solutionTime);
 }
 
 int main() {
-  cout << "Solving..." << endl;
-  solveBruteForce();
+  for (int i = 0; i < 10; ++i) {
+    cout << "Solving..." << endl;
+    solveBruteForce();
+  }
   return 0;
 }
